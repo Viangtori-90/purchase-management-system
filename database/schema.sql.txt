@@ -1,0 +1,30 @@
+-- Создание схемы purchase
+CREATE SCHEMA IF NOT EXISTS purchase;
+
+-- Таблица customer
+CREATE TABLE purchase.customer (
+    customer_code VARCHAR(50) PRIMARY KEY,
+    customer_name VARCHAR(255) NOT NULL,
+    customer_inn VARCHAR(12),
+    customer_kpp VARCHAR(9),
+    customer_legal_address TEXT,
+    customer_postal_address TEXT,
+    customer_email VARCHAR(100),
+    customer_code_main VARCHAR(50),
+    is_organization BOOLEAN DEFAULT false,
+    is_person BOOLEAN DEFAULT false,
+    phone VARCHAR(20)
+);
+
+-- Таблица lot  
+CREATE TABLE purchase.lot (
+    id BIGSERIAL PRIMARY KEY,
+    lot_name VARCHAR(255) NOT NULL,
+    customer_code VARCHAR(50),
+    price NUMERIC(15,2),
+    currency_code VARCHAR(3),
+    nds_rate VARCHAR(20),
+    place_delivery TEXT,
+    date_delivery TIMESTAMP,
+    FOREIGN KEY (customer_code) REFERENCES purchase.customer(customer_code)
+);
